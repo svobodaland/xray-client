@@ -125,7 +125,8 @@ if (-not (Test-Windows)) {
    exit 1
 }
 if (-not (Test-Administrator)) {
-    Write-Error "[x] This script requires administrator privileges."
+    Write-Host "[!] This script requires administrator privileges."
+    Start-Process -FilePath "powershell" -ArgumentList "$('-File ""')$(Get-Location)$('\')$($MyInvocation.MyCommand.Name)$('""')" -Verb runAs
     exit 1
 }
 if ($Config -eq "config.json") {
