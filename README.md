@@ -14,6 +14,12 @@ Privacy focused [xray-core](https://github.com/XTLS/Xray-core) client by https:/
 
 ### Linux
 
+Requirements: 
+- systemd
+- git
+- sudo
+- root privileges
+
 ```bash
 # Clone the repository
 git clone https://github.com/svobodaland/xray-client
@@ -27,6 +33,10 @@ sudo ./run.sh --config path/to/config.json
 ```
 
 ### Windows
+
+Requirements: 
+- powershell 5.1 (installed by default on windows 10/11)
+- Administrative privileges
 
 Start powershell.exe **as Administrator** and run code below
 
