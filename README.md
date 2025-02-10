@@ -51,7 +51,7 @@ cd xray-client/windows
 
 # Run
 .\run.ps1 --config "path\to\config.json"
-# OR just put config.json into this directory and run .\run.sh
+# OR just put config.json into this directory and run .\run.ps1
 ```
 
 ### Examples
