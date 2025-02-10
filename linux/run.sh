@@ -489,7 +489,7 @@ add_tun() {
 
     # Load the tun module if not already loaded
     if ( ! (lsmod | grep -q "^tun\s")); then
-        insmod /lib/modules/tun.ko
+        insmod /lib/modules/tun.ko &>/dev/null
     fi
 
     # Prevent DNS query loop
