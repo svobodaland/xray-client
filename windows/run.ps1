@@ -157,7 +157,7 @@ $xray_config = Join-Path $xray_path "config.json"
 $tun2socks_path = Join-Path $env:ProgramFiles "tun2socks"
 $tun2socks_binary = Join-Path $tun2socks_path "tun2socks.exe"
 
-$ShowWindows = "Normal"
+$ShowWindows = "Hidden"
 $TUN_NAME = "wintun"
 
 $script:XRAY_PID = $null 
