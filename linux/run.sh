@@ -668,6 +668,10 @@ start() {
     systemctl enable xray
     systemctl restart xray
 
+    if ! $nokillswitch; then
+        killswitch_enable
+    fi
+
     ./tun2socks -device tun://$tun_name -proxy socks5://127.0.0.1:1080 &
     tun2socks_pid=$!
     trap 'echo "[~] Stopping tun2socks..."; kill "$tun2socks_pid" 2>/dev/null; wait "$tun2socks_pid"; echo "[+] Stopped tun2socks"' SIGTERM SIGINT EXIT
