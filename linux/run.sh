@@ -282,7 +282,7 @@ set_resolvconf() {
 }
 
 get_xray_address() {
-    grep 'address' "$config_path" | sed ':a;N;$!ba;s/\n//g' | sed 's/"//g'| sed 's/,//g' | awk '{print$2}'
+    grep -oP '"address":\s*"\K[^"]+' "$config_path"
 }
 get_ip_from_address() {
     address=$1
