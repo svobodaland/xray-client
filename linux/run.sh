@@ -306,7 +306,7 @@ get_ip_from_address() {
         while true; do
             if [ $tries -gt 5 ]; then
                 echo "[-] Can't make DNS requests through DNSCrypt-proxy, exiting"
-                exit 1
+                return 1
             fi
             ip=$(dig +short "$address" | head -n1)
             if echo "$ip" | grep -q "communications error"; then
@@ -320,15 +320,15 @@ get_ip_from_address() {
         done
     else
         echo "[x] $address is an invalid address"
-        exit 1
+        return 1
     fi
 }
 get_xray_ip() {
     if [ -z "$xray_address" ]; then
-        xray_address=$(get_xray_address)
+        xray_address=$(get_xray_address) && [ -n "$xray_address" ] || { echo "[-] Failed to get VPN address" >&2; exit 1; }
     fi
     if [ -z "$xray_ip" ]; then
-        xray_ip=$(get_ip_from_address "$xray_address")
+        xray_ip=$(get_ip_from_address "$xray_address") || { echo "[-] Failed to get VPN's IP" >&2; exit 1; }
     fi
     echo "$xray_ip"
 }
@@ -543,7 +543,7 @@ killswitch_enable() {
         return 1
     fi
 
-    xray_ip=$(get_xray_ip)
+    xray_ip=$(get_xray_ip) || { cleanup; exit 1; }
 
     # allow local and tunnel traffic
     $ipt -F
