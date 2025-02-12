@@ -676,10 +676,6 @@ start() {
     tun2socks_pid=$!
     trap 'echo "[~] Stopping tun2socks..."; kill "$tun2socks_pid" 2>/dev/null; wait "$tun2socks_pid"; echo "[+] Stopped tun2socks"' SIGTERM SIGINT EXIT
 
-    if ! $nokillswitch; then
-        killswitch_enable
-    fi
-
     echo "[+] Started main process, press CTRL+C to stop"
     wait "$tun2socks_pid"
 
