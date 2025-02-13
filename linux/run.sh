@@ -503,12 +503,16 @@ add_tun() {
     ip tuntap add dev $tun_name mode tun user tun2socks
 
     ip addr add 10.0.0.1/24 dev $tun_name
-    ip addr add fdfe:dcba:9876::1/125 dev $tun_name
+
+    # We turn off ipv6 anyway
+    # ip addr add fdfe:dcba:9876::1/125 dev $tun_name
 
     ip link set $tun_name up
-    ip -6 link set $tun_name up 2>/dev/null
     ip route add default dev $tun_name
-    ip -6 route add default dev $tun_name 2>/dev/null
+
+    # We turn off ipv6 anyway
+    # ip -6 link set $tun_name up 2>/dev/null
+    # ip -6 route add default dev $tun_name 2>/dev/null
 
     echo "[+] Created tunnel interface $tun_name"
 }
