@@ -195,9 +195,11 @@ receive_dns_blacklist() {
     if [[ ! -e $dns_blacklist_path ]]; then
         echo "[~] DNS Blacklist file does not exist, downloading..."
         wget "$dns_blacklist_url" -O $dns_blacklist_path --no-use-server-timestamps
+	    systemctl restart dnscrypt-proxy
     elif is_file_stale $dns_blacklist_path "7"; then
         echo "[~] DNS Blacklist file is stale, downloading..."
         wget "$dns_blacklist_url" -O $dns_blacklist_path --no-use-server-timestamps
+	    systemctl restart dnscrypt-proxy
     else
         echo "[+] DNS blacklist is up to date"
     fi
