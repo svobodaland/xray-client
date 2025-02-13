@@ -659,13 +659,7 @@ start() {
         useradd -m tun2socks 
     fi
 
-    # If tunnel interface already exists, delete it
-    ip link show $tun_name &>/dev/null && del_tun
-
     handle_xray_config
-
-    # Add tunnel interface
-    add_tun
 
     systemctl enable xray
     systemctl restart xray
@@ -673,6 +667,12 @@ start() {
     if ! $nokillswitch; then
         killswitch_enable
     fi
+
+    # If tunnel interface already exists, delete it
+    ip link show $tun_name &>/dev/null && del_tun
+
+    # Add tunnel interface
+    add_tun
 
     ./tun2socks -device tun://$tun_name -proxy socks5://127.0.0.1:1080 &
     tun2socks_pid=$!
