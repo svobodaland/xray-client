@@ -1,6 +1,7 @@
 param (
     [string]$Config = "config.json",
     [string]$Blacklist = "https://big.oisd.nl/domainswild",
+    [string]$BackupDNS = $null,
     [string]$Log = $null,
     [switch]$Nokillswitch = $false,
     [switch]$KillswitchOff = $false,
@@ -110,6 +111,7 @@ Usage: .\svoboda-vpn-windows.ps1 [OPTIONS]
 Options:
 -Config PATH   Specify the configuration file (default: ./config.json)
 -Blacklist URL Url to DNSCrypt-compatible DNS blacklist. Default is https://big.oisd.nl/domainswild"
+-BackupDNS IP  Optional backup DNS server in case DNSCrypt servers are down or DNSCrypt-proxy is failing. QUERIES SENT TO THE BACKUP SERVER WILL NOT BE ENCRYPTED OR AUTHENTICATED."
 -Nofilter      Turn off DNS blacklist for blocking ads & tracking
 -Nokillswitch  Don't turn on killswitch. Killswitch is turned on by default."
 -KillswitchOff Turn off killswitch and exit."
@@ -272,9 +274,11 @@ function Get-GatewayIP {
 function Set-SystemDNS {
     Write-Host "[~] Setting system DNS..."
 
-    # here you can add optional backup DNS server in case DNSCrypt-proxy servers are down. Queries sent to the backup server will not be encrypted. 
-    # Set-DnsClientServerAddress -InterfaceAlias $script:default_interface -ServerAddresses ("127.0.0.1", "9.9.9.9")
-    Set-DnsClientServerAddress -InterfaceAlias $script:default_interface -ServerAddresses ("127.0.0.1")
+    if ($BackupDNS) {
+        Set-DnsClientServerAddress -InterfaceAlias $script:default_interface -ServerAddresses ("127.0.0.1", $BackupDNS)
+    } else {
+        Set-DnsClientServerAddress -InterfaceAlias $script:default_interface -ServerAddresses ("127.0.0.1")
+    }
 
     Write-Host "[+] Set system DNS"
 }
