@@ -20,6 +20,8 @@ if [ $? -ne 0 ]; then
 fi
 
 SCRIPT_NAME=$(basename "$0")
+SCRIPT_PATH="$0"
+SCRIPT_ARGS="$@"
 PID_FILE="/tmp/$SCRIPT_NAME.pid"
 
 
@@ -202,7 +204,9 @@ update() {
 
         git pull --rebase
 
-        echo "[+] Updated"
+        echo "[+] Updated, restarting"
+
+        exec "$SCRIPT_PATH" $SCRIPT_ARGS
     else
         echo "[?] Already up-to-date"
     fi
