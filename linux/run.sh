@@ -191,6 +191,27 @@ is_file_stale() {
     fi
 }
 
+update() {
+    if is_file_stale "$0" "7"; then
+
+        echo "[~] Checking for updates..."
+
+        git fetch origin
+
+        # Check if local branch is behind remote
+        if [[ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]]; then
+            echo "[~] New updates detected, pulling changes..."
+
+            git pull --rebase
+
+            echo "[+] Updated"
+        else
+            echo "[?] Already up-to-date"
+        fi
+
+    fi
+}
+
 receive_dns_blacklist() {
     if [[ ! -e $dns_blacklist_path ]]; then
         echo "[~] DNS Blacklist file does not exist, downloading..."
@@ -618,6 +639,8 @@ start() {
         killswitch_disable
         exit $? 
     fi
+
+    update
 
     echo "[~] Starting main process..."
 
