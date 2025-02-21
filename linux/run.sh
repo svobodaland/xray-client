@@ -192,8 +192,6 @@ is_file_stale() {
 }
 
 update() {
-    if is_file_stale "$0" "7"; then
-
         echo "[~] Checking for updates..."
 
         git fetch origin
@@ -207,8 +205,6 @@ update() {
             echo "[+] Updated"
         else
             echo "[?] Already up-to-date"
-        fi
-
     fi
 }
 
