@@ -9,8 +9,11 @@ User=_dnscrypt-proxy
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 CacheDirectory=dnscrypt-proxy
-DynamicUser=yes
 ExecStart=/usr/bin/dnscrypt-proxy --config /etc/dnscrypt-proxy/dnscrypt-proxy.toml
+RuntimeDirectory=dnscrypt-proxy
+StateDirectory=dnscrypt-proxy
+
+DynamicUser=yes
 LockPersonality=yes
 LogsDirectory=dnscrypt-proxy
 MemoryDenyWriteExecute=true
@@ -27,8 +30,6 @@ ProtectSystem=strict
 RestrictAddressFamilies=AF_INET AF_INET6
 RestrictNamespaces=true
 RestrictRealtime=true
-RuntimeDirectory=dnscrypt-proxy
-StateDirectory=dnscrypt-proxy
 SystemCallArchitectures=native
 SystemCallFilter=@system-service
 
