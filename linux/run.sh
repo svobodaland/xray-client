@@ -192,19 +192,19 @@ is_file_stale() {
 }
 
 update() {
-        echo "[~] Checking for updates..."
+    echo "[~] Checking for updates..."
 
-        git fetch origin
+    git fetch origin
 
-        # Check if local branch is behind remote
-        if [[ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]]; then
-            echo "[~] New updates detected, pulling changes..."
+    # Check if local branch is behind remote
+    if [[ $(git rev-parse HEAD) != $(git rev-parse @{u}) ]]; then
+        echo "[~] New updates detected, pulling changes..."
 
-            git pull --rebase
+        git pull --rebase
 
-            echo "[+] Updated"
-        else
-            echo "[?] Already up-to-date"
+        echo "[+] Updated"
+    else
+        echo "[?] Already up-to-date"
     fi
 }
 
@@ -636,8 +636,6 @@ start() {
         exit $? 
     fi
 
-    update
-
     echo "[~] Starting main process..."
 
     echo "[~] Testing internet connection..."
@@ -645,6 +643,8 @@ start() {
         echo "[-] No internet connection"
         exit 1
     fi
+
+    update
 
     install_dependencies
 
